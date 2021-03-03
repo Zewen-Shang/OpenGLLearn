@@ -13,7 +13,6 @@
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
-
 unsigned int loadTexture(char const* path) {
     unsigned int textureID;
     glGenTextures(1, &textureID);
@@ -103,7 +102,6 @@ float vertices[] = {
 //    1, 2, 3  // 第二个三角形
 //};
 
-
 float last_time = 0.0f;
 
 bool mouse_first = true;
@@ -113,6 +111,19 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scoll_callback(GLFWwindow* window, double xpos, double ypos);
 
 Camera camera;
+
+glm::vec3 cubePositions[] = {
+    glm::vec3(0.0f,  0.0f,  0.0f),
+    glm::vec3(2.0f,  5.0f, -15.0f),
+    glm::vec3(-1.5f, -2.2f, -2.5f),
+    glm::vec3(-3.8f, -2.0f, -12.3f),
+    glm::vec3(2.4f, -0.4f, -3.5f),
+    glm::vec3(-1.7f,  3.0f, -7.5f),
+    glm::vec3(1.3f, -2.0f, -2.5f),
+    glm::vec3(1.5f,  2.0f, -2.5f),
+    glm::vec3(1.5f,  0.2f, -1.5f),
+    glm::vec3(-1.3f,  1.0f, -1.5f)
+};
 
 int main()
 {
@@ -200,7 +211,7 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
-        glm::vec3 lightPos(2.0f, 2.0f, 2.0f);
+        glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
         glm::mat4 model(1.0f),view(1.0f),proj(1.0f);
         //model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0, 0.0, 0.0));
@@ -211,31 +222,41 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-        lightingShader.use();
-        lightingShader.setVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-        lightingShader.setFloat("material.shininess", 64.0f);
+        for (glm::vec3 position : cubePositions) {
 
-        lightingShader.setVec3("light.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        lightingShader.setVec3("light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f)); // 将光照调暗了一些以搭配场景
-        lightingShader.setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-        lightingShader.setVec3("light.position", lightPos);
+            glm::mat4 cubeModel = glm::translate(model, position);
 
-        lightingShader.setVec3("viewPos", camera.Position);
-        lightingShader.setMatrix4("model", model);
-        lightingShader.setMatrix4("view", view);
-        lightingShader.setMatrix4("proj", proj);
+            lightingShader.use();
+            lightingShader.setVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+            lightingShader.setFloat("material.shininess", 2.0f);
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, diffuseTexture);
+            lightingShader.setVec3("light.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+            lightingShader.setVec3("light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f)); // 将光照调暗了一些以搭配场景
+            lightingShader.setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+            lightingShader.setVec3("light.position", lightPos);
+            lightingShader.setFloat("light.constant", 1.0f);
+            lightingShader.setFloat("light.linear", 0.09f);
+            lightingShader.setFloat("light.quadratic", 0.032f);
 
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D,specularTexture);
 
-        lightingShader.setInt("material.diffuse", 0);
-        lightingShader.setInt("material.specular", 1);
+            lightingShader.setVec3("viewPos", camera.Position);
+            lightingShader.setMatrix4("model", cubeModel);
+            lightingShader.setMatrix4("view", view);
+            lightingShader.setMatrix4("proj", proj);
 
-        glBindVertexArray(cubeVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, diffuseTexture);
+
+            glActiveTexture(GL_TEXTURE1);
+            glBindTexture(GL_TEXTURE_2D, specularTexture);
+
+            lightingShader.setInt("material.diffuse", 0);
+            lightingShader.setInt("material.specular", 1);
+
+            glBindVertexArray(cubeVAO);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+
 
         lampShader.use();
         model = glm::translate(model, lightPos);
