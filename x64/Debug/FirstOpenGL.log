@@ -1,7 +1,7 @@
 ﻿  main.cpp
 F:\OpenGL\FirstOpenGL\FirstOpenGL\Shader.h(2,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
-F:\OpenGL\FirstOpenGL\FirstOpenGL\main.cpp(282,24): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-F:\OpenGL\FirstOpenGL\FirstOpenGL\main.cpp(312,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-F:\OpenGL\FirstOpenGL\FirstOpenGL\main.cpp(313,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-F:\OpenGL\FirstOpenGL\FirstOpenGL\main.cpp(322,31): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+F:\OpenGL\FirstOpenGL\FirstOpenGL\main.cpp(286,24): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+F:\OpenGL\FirstOpenGL\FirstOpenGL\main.cpp(316,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+F:\OpenGL\FirstOpenGL\FirstOpenGL\main.cpp(317,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+F:\OpenGL\FirstOpenGL\FirstOpenGL\main.cpp(326,31): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
   FirstOpenGL.vcxproj -> F:\OpenGL\FirstOpenGL\x64\Debug\FirstOpenGL.exe
