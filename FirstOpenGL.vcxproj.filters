@@ -35,6 +35,9 @@
     <ClInclude Include="mesh.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.vert">
@@ -47,6 +50,12 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="lightingShader.vert">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="nanoShader.vert">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="nanoShader.frag">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
